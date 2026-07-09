@@ -1,0 +1,414 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #f4f5f7;
+  color: #222;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: min(440px, 100vw);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ── Screens ── */
+.screen {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+.screen.active {
+  display: flex;
+}
+
+/* ── SETUP ── */
+.setup-header {
+  text-align: center;
+  padding: 20px 16px 8px;
+}
+.setup-header h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+.subtitle {
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.picker-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 10px;
+  flex: 1;
+  overflow: auto;
+}
+
+.picker-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.picker-col h2 {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #444;
+}
+
+.vs-divider {
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #ef4444;
+  padding: 0 4px;
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ball-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.12s;
+}
+.ball-option:hover {
+  border-color: #aaa;
+  transform: translateY(-1px);
+}
+.ball-option.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+.ball-option .emoji {
+  font-size: 1.4rem;
+}
+.ball-option .name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #555;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.selection-info {
+  font-size: 0.72rem;
+  color: #888;
+  text-align: center;
+  padding: 4px 0;
+  min-height: 2em;
+}
+
+.start-btn {
+  appearance: none;
+  border: none;
+  background: #3b82f6;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px;
+  margin: 8px 14px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.start-btn:hover {
+  background: #2563eb;
+}
+
+/* ── BATTLE ── */
+.battle-hud {
+  padding: 8px 12px;
+}
+.top-hud {
+  text-align: center;
+}
+.question {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.timer {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.arena-row {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  padding: 0 6px;
+  flex: 1;
+}
+
+.side-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 32px;
+  flex-shrink: 0;
+}
+.side-controls label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #999;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+.side-controls input[type="range"] {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  height: 100px;
+  width: 4px;
+  accent-color: #3b82f6;
+}
+.size-val {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #666;
+}
+
+.canvas-wrap {
+  position: relative;
+  flex: 1;
+  aspect-ratio: 1 / 1;
+  max-height: 420px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+#arenaCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bottom-hud {
+  text-align: center;
+}
+.hp-row {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+}
+.hp-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ball-label {
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.hp-value {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #2ecc71;
+}
+.damage-display {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+.speed-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.speed-btn {
+  appearance: none;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s;
+}
+.speed-btn:hover {
+  background: #f0f0f0;
+}
+.speed-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  min-width: 2.2em;
+  text-align: center;
+}
+
+/* ── MODE TABS ── */
+.mode-tabs {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 8px;
+}
+.mode-tab {
+  appearance: none;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  color: #666;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 6px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.mode-tab.active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #3b82f6;
+}
+.mode-content {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+.mode-content.active {
+  display: flex;
+}
+
+/* ── TOURNAMENT SETUP ── */
+.tourney-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #888;
+  padding: 8px 10px 4px;
+}
+.tourney-grid {
+  grid-template-columns: repeat(4, 1fr);
+  padding: 6px 10px;
+  gap: 5px;
+  overflow-y: auto;
+  flex: 1;
+}
+.tourney-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 4px 10px;
+}
+#tourneyCount {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #666;
+}
+.random-btn {
+  appearance: none;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #555;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.random-btn:hover { background: #f0f0f0; }
+.start-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── TOURNAMENT BATTLE ── */
+.tourney-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+  padding: 0 6px;
+}
+.bracket-canvas {
+  width: 100%;
+  height: 120px;
+  display: block;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fafafa;
+}
+.tourney-arena {
+  flex: 1;
+  min-height: 200px;
+}
+.tourney-arena canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.back-btn {
+  appearance: none;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #555;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px;
+  margin: 6px 14px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.back-btn:hover {
+  background: #f0f0f0;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .picker-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .ball-option {
+    padding: 6px 2px;
+  }
+  .ball-option .emoji {
+    font-size: 1.2rem;
+  }
+  .ball-option .name {
+    font-size: 0.58rem;
+  }
+}

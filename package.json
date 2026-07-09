@@ -1,0 +1,17 @@
+{
+  "name": "math-balls-battle-renderer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "render": "node render-video.js",
+    "tts": "node generate-tts.js",
+    "bot": "node telegram-bot.js",
+    "tiktok-auth": "node tiktok-auth.js"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.65",
+    "dotenv": "^16.6.1",
+    "node-gtts": "^2.0.2",
+    "telegraf": "^4.16.3"
+  }
+}

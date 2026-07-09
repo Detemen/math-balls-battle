@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Math Balls Battle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- SETUP SCREEN -->
+    <section id="setupScreen" class="screen active">
+      <header class="setup-header">
+        <h1>Math Balls Battle</h1>
+        <div class="mode-tabs">
+          <button class="mode-tab active" data-mode="duel">Duel</button>
+          <button class="mode-tab" data-mode="tournament">Tournament</button>
+        </div>
+      </header>
+
+      <!-- DUEL PICKER -->
+      <div id="duelSetup" class="mode-content active">
+        <div class="picker-row">
+          <div class="picker-col">
+            <h2>Ball 1</h2>
+            <div id="picker1" class="picker-grid"></div>
+            <p id="selected1" class="selection-info">Pick a ball…</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="picker-col">
+            <h2>Ball 2</h2>
+            <div id="picker2" class="picker-grid"></div>
+            <p id="selected2" class="selection-info">Pick a ball…</p>
+          </div>
+        </div>
+        <button id="startBtn" class="start-btn">Start Battle</button>
+      </div>
+
+      <!-- TOURNAMENT PICKER -->
+      <div id="tournamentSetup" class="mode-content">
+        <p class="tourney-hint">Pick 8 balls for the bracket (click to add/remove)</p>
+        <div id="tourneyPicker" class="picker-grid tourney-grid"></div>
+        <div class="tourney-selected">
+          <span id="tourneyCount">0 / 8 selected</span>
+          <button id="tourneyRandom" class="random-btn">Random 8</button>
+        </div>
+        <button id="startTourneyBtn" class="start-btn" disabled>Start Tournament</button>
+      </div>
+    </section>
+
+    <!-- BATTLE SCREEN -->
+    <section id="battleScreen" class="screen">
+      <div class="battle-hud top-hud">
+        <p id="battleQuestion" class="question">Can ➕ Addition beat ✖️ Multiplication?</p>
+        <p id="battleTimer" class="timer">62.0s</p>
+      </div>
+
+      <div class="arena-row">
+        <div class="side-controls left-side">
+          <label>Size</label>
+          <input type="range" id="sizeRange1" min="50" max="300" value="100" step="10" orient="vertical">
+          <span id="sizeVal1" class="size-val">100%</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="arenaCanvas" aria-label="Battle arena"></canvas>
+        </div>
+        <div class="side-controls right-side">
+          <label>Size</label>
+          <input type="range" id="sizeRange2" min="50" max="300" value="100" step="10" orient="vertical">
+          <span id="sizeVal2" class="size-val">100%</span>
+        </div>
+      </div>
+
+      <div class="battle-hud bottom-hud">
+        <div class="hp-row">
+          <div class="hp-block">
+            <span id="ball1Name" class="ball-label">➕ Addition</span>
+            <span id="ball1Hp" class="hp-value">HP: 1000</span>
+          </div>
+          <div class="speed-controls">
+            <button id="speedDown" class="speed-btn">−</button>
+            <span id="speedLabel" class="speed-label">1×</span>
+            <button id="speedUp" class="speed-btn">+</button>
+          </div>
+          <div class="hp-block">
+            <span id="ball2Name" class="ball-label">✖️ Multiplication</span>
+            <span id="ball2Hp" class="hp-value">HP: 1000</span>
+          </div>
+        </div>
+        <p id="damageDisplay" class="damage-display">Dmg: 0 | Dmg: 0</p>
+      </div>
+
+      <button id="backBtn" class="back-btn">← Back</button>
+    </section>
+
+    <!-- TOURNAMENT SCREEN -->
+    <section id="tourneyScreen" class="screen">
+      <div class="battle-hud top-hud">
+        <p id="tourneyRound" class="question">Quarter-final 1/4</p>
+        <p id="tourneyMatchup" class="timer" style="font-size:1rem;color:#333"></p>
+      </div>
+
+      <div class="tourney-layout">
+        <canvas id="bracketCanvas" class="bracket-canvas" aria-label="Tournament bracket"></canvas>
+        <div class="canvas-wrap tourney-arena">
+          <canvas id="tourneyArena" aria-label="Tournament battle"></canvas>
+        </div>
+      </div>
+
+      <div class="battle-hud bottom-hud">
+        <div class="hp-row">
+          <div class="hp-block">
+            <span id="t1Name" class="ball-label"></span>
+            <span id="t1Hp" class="hp-value">HP: 1000</span>
+          </div>
+          <div class="speed-controls">
+            <button id="tSpeedDown" class="speed-btn">−</button>
+            <span id="tSpeedLabel" class="speed-label">1×</span>
+            <button id="tSpeedUp" class="speed-btn">+</button>
+          </div>
+          <div class="hp-block">
+            <span id="t2Name" class="ball-label"></span>
+            <span id="t2Hp" class="hp-value">HP: 1000</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="tourneyBackBtn" class="back-btn">← Back</button>
+    </section>
+
+  </main>
+
+  <script src="./game-core.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>

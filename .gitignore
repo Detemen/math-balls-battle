@@ -1,0 +1,62 @@
+.env
+renders/
+*_temp.mp4
+
+# --- appended safety patterns ---
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+credentials.json
+credentials*.json
+secrets/
+*.secret
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+dist/
+build/
+.next/
+.nuxt/
+out/
+coverage/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Xcode / Swift
+xcuserdata/
+*.xcuserstate
+DerivedData/
+.build/
+.swiftpm/
+*.xcodeproj/
+
+# Logs
+*.log
+logs/
+
+# Misc caches
+.cache/
+.env.example

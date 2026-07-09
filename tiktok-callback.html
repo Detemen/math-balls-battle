@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Authorization</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; padding: 40px 20px; background: #f5f5f5; }
+  .card { max-width: 500px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  h1 { color: #333; margin-bottom: 20px; }
+  .code-box { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 8px; padding: 15px; margin: 20px 0; word-break: break-all; font-family: monospace; font-size: 14px; cursor: pointer; }
+  .code-box:hover { background: #c8e6c9; }
+  .error { background: #ffebee; border-color: #f44336; color: #c62828; }
+  .hint { color: #666; font-size: 14px; margin-top: 15px; }
+  .copied { color: #4caf50; font-weight: bold; margin-top: 10px; }
+  button { background: #4caf50; color: #fff; border: none; padding: 10px 25px; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+  button:hover { background: #388e3c; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1 id="title">TikTok Authorization</h1>
+  <div id="content"></div>
+</div>
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("code");
+  var error = params.get("error");
+  var errorDesc = params.get("error_description") || "";
+  var contentEl = document.getElementById("content");
+  var titleEl = document.getElementById("title");
+
+  if (error) {
+    titleEl.textContent = "Authorization Failed";
+    contentEl.innerHTML =
+      '<div class="code-box error">' + error + (errorDesc ? ": " + errorDesc : "") + '</div>' +
+      '<p class="hint">Try /tiktok_auth again in the bot.</p>';
+    return;
+  }
+
+  if (!code) {
+    titleEl.textContent = "No Code Found";
+    contentEl.innerHTML = '<p class="hint">This page expects a TikTok OAuth redirect with a code parameter.</p>';
+    return;
+  }
+
+  titleEl.textContent = "Authorization Successful!";
+  contentEl.innerHTML =
+    '<p>Copy this code and send it to the bot:</p>' +
+    '<div class="code-box" id="codeBox" title="Click to copy">' + code + '</div>' +
+    '<button id="copyBtn">Copy Code</button>' +
+    '<div id="copiedMsg"></div>' +
+    '<p class="hint">In Telegram, send:<br><b>/tiktok_code ' + code + '</b></p>';
+
+  function copyCode() {
+    navigator.clipboard.writeText(code).then(function() {
+      document.getElementById("copiedMsg").innerHTML = '<span class="copied">Copied!</span>';
+    }).catch(function() {
+      var range = document.createRange();
+      range.selectNodeContents(document.getElementById("codeBox"));
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  }
+
+  document.getElementById("copyBtn").addEventListener("click", copyCode);
+  document.getElementById("codeBox").addEventListener("click", copyCode);
+})();
+</script>
+</body>
+</html>
