@@ -59,4 +59,3 @@ logs/
 
 # Misc caches
 .cache/
-.env.example
