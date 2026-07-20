@@ -1,5 +1,9 @@
 # math-balls-battle
 
+![Node.js](https://img.shields.io/badge/Node.js-canvas%20renderer-339933?logo=node.js&logoColor=white)
+![TikTok](https://img.shields.io/badge/TikTok-Content%20Posting%20API-000000?logo=tiktok&logoColor=white)
+![Telegram](https://img.shields.io/badge/Telegram-bot-26A5E4?logo=telegram&logoColor=white)
+
 Generates short "math battle" videos — two physics-driven ball simulations (e.g. multiplication vs. factorial growth) rendered frame-by-frame with canvas, narrated with TTS, captioned, and optionally published to Telegram/TikTok.
 
 Sample output: `battle_multiplication_vs_factorial.mp4`.
