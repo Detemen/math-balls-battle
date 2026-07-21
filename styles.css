@@ -11,8 +11,11 @@ html, body {
 
 body {
   font-family: "Inter", "Segoe UI", sans-serif;
-  background: #f4f5f7;
-  color: #222;
+  background:
+    radial-gradient(600px 400px at 15% -5%, rgba(59,130,246,.10), transparent 60%),
+    radial-gradient(500px 380px at 100% 100%, rgba(239,68,68,.08), transparent 60%),
+    #f4f5f9;
+  color: #1c1e27;
   display: flex;
   justify-content: center;
 }
@@ -38,12 +41,17 @@ body {
 /* ── SETUP ── */
 .setup-header {
   text-align: center;
-  padding: 20px 16px 8px;
+  padding: 26px 16px 10px;
 }
 .setup-header h1 {
   font-family: "Inter", sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 800;
+  letter-spacing: -.02em;
+  background: linear-gradient(90deg, #1c1e27, #3b5bfd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .subtitle {
   color: #666;
@@ -53,8 +61,8 @@ body {
 
 .picker-row {
   display: flex;
-  gap: 8px;
-  padding: 12px 10px;
+  gap: 10px;
+  padding: 14px 12px;
   flex: 1;
   overflow: auto;
 }
@@ -66,55 +74,80 @@ body {
   gap: 6px;
 }
 .picker-col h2 {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
   text-align: center;
-  color: #444;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: .04em;
 }
 
 .vs-divider {
   display: flex;
   align-items: center;
   font-weight: 800;
-  font-size: 1.2rem;
-  color: #ef4444;
-  padding: 0 4px;
+  font-size: 1.1rem;
+  color: #fff;
+  background: linear-gradient(180deg, #ff6b6b, #ef4444);
+  padding: 6px 3px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(239,68,68,.35);
+  writing-mode: vertical-lr;
+  align-self: center;
 }
 
 .picker-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 7px;
   overflow-y: auto;
   flex: 1;
 }
 
 .ball-option {
+  --c: #94a3b8;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 8px 4px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
+  gap: 3px;
+  padding: 10px 4px 8px;
+  border: 1px solid #e5e7ec;
+  border-radius: 12px;
   background: #fff;
   cursor: pointer;
-  transition: border-color 0.15s, transform 0.12s;
+  transition: border-color .15s, transform .12s, box-shadow .15s;
+  box-shadow: 0 1px 2px rgba(20,20,40,.03);
+}
+.ball-option::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--c);
+  opacity: .55;
+  transition: opacity .15s;
 }
 .ball-option:hover {
-  border-color: #aaa;
-  transform: translateY(-1px);
+  border-color: var(--c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20,20,40,.08);
 }
+.ball-option:hover::before { opacity: .9; }
 .ball-option.selected {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent), 0 6px 16px rgba(20,20,40,.08);
 }
+.ball-option.selected::before { opacity: 1; height: 4px; }
 .ball-option .emoji {
   font-size: 1.4rem;
 }
 .ball-option .name {
   font-size: 0.65rem;
   font-weight: 700;
-  color: #555;
+  color: #4a4d5a;
   text-align: center;
   line-height: 1.1;
 }
@@ -130,24 +163,27 @@ body {
 .start-btn {
   appearance: none;
   border: none;
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
   color: #fff;
   font-family: inherit;
   font-weight: 700;
   font-size: 1rem;
-  padding: 14px;
-  margin: 8px 14px 16px;
-  border-radius: 12px;
+  padding: 15px;
+  margin: 10px 14px 18px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: background 0.15s;
+  box-shadow: 0 8px 20px rgba(59,130,246,.35);
+  transition: transform .12s, box-shadow .12s, opacity .15s;
 }
 .start-btn:hover {
-  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(59,130,246,.42);
 }
+.start-btn:active { transform: translateY(0); }
 
 /* ── BATTLE ── */
 .battle-hud {
-  padding: 8px 12px;
+  padding: 10px 12px;
 }
 .top-hud {
   text-align: center;
@@ -157,14 +193,15 @@ body {
   font-size: 0.9rem;
 }
 .timer {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.7rem;
+  font-weight: 800;
   color: #ef4444;
+  font-variant-numeric: tabular-nums;
 }
 
 .arena-row {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   gap: 4px;
   padding: 0 6px;
   flex: 1;
@@ -203,11 +240,12 @@ body {
   position: relative;
   flex: 1;
   aspect-ratio: 1 / 1;
-  max-height: 420px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  max-height: min(62vh, 620px);
+  border: 1px solid #e5e7ec;
+  border-radius: 16px;
   overflow: hidden;
   background: #fff;
+  box-shadow: 0 10px 30px rgba(20,20,40,.08), inset 0 0 0 1px rgba(255,255,255,.5);
 }
 #arenaCanvas {
   width: 100%;
@@ -233,9 +271,10 @@ body {
   font-size: 0.82rem;
 }
 .hp-value {
-  font-weight: 700;
-  font-size: 0.9rem;
+  font-weight: 800;
+  font-size: 0.95rem;
   color: #2ecc71;
+  font-variant-numeric: tabular-nums;
 }
 .damage-display {
   font-size: 0.75rem;
@@ -250,22 +289,23 @@ body {
 }
 .speed-btn {
   appearance: none;
-  border: 1px solid #ddd;
+  border: 1px solid #e5e7ec;
   background: #fff;
   color: #333;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.12s;
+  transition: background .12s, border-color .12s;
 }
 .speed-btn:hover {
-  background: #f0f0f0;
+  background: #eff6ff;
+  border-color: #3b82f6;
 }
 .speed-label {
   font-weight: 700;
@@ -279,25 +319,30 @@ body {
   display: flex;
   gap: 4px;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 10px;
+  background: #eceef3;
+  padding: 4px;
+  border-radius: 12px;
+  width: fit-content;
+  margin-inline: auto;
 }
 .mode-tab {
   appearance: none;
-  border: 2px solid #e0e0e0;
-  background: #fff;
+  border: none;
+  background: transparent;
   color: #666;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.8rem;
-  padding: 6px 18px;
-  border-radius: 8px;
+  padding: 7px 18px;
+  border-radius: 9px;
   cursor: pointer;
   transition: all 0.15s;
 }
 .mode-tab.active {
-  border-color: #3b82f6;
-  background: #eff6ff;
-  color: #3b82f6;
+  background: #fff;
+  color: #3b5bfd;
+  box-shadow: 0 2px 8px rgba(20,20,40,.1);
 }
 .mode-content {
   display: none;
@@ -313,12 +358,12 @@ body {
   text-align: center;
   font-size: 0.78rem;
   color: #888;
-  padding: 8px 10px 4px;
+  padding: 10px 10px 4px;
 }
 .tourney-grid {
   grid-template-columns: repeat(4, 1fr);
   padding: 6px 10px;
-  gap: 5px;
+  gap: 6px;
   overflow-y: auto;
   flex: 1;
 }
@@ -327,7 +372,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 4px 10px;
+  padding: 6px 10px;
 }
 #tourneyCount {
   font-size: 0.8rem;
@@ -336,20 +381,22 @@ body {
 }
 .random-btn {
   appearance: none;
-  border: 1px solid #ddd;
+  border: 1px solid #e5e7ec;
   background: #fff;
   color: #555;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.72rem;
-  padding: 5px 12px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 9px;
   cursor: pointer;
+  transition: border-color .12s, background .12s;
 }
-.random-btn:hover { background: #f0f0f0; }
+.random-btn:hover { border-color: #3b82f6; background: #eff6ff; }
 .start-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* ── TOURNAMENT BATTLE ── */
@@ -357,16 +404,16 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 6px;
+  gap: 8px;
   padding: 0 6px;
 }
 .bracket-canvas {
   width: 100%;
   height: 120px;
   display: block;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  background: #fafafa;
+  border: 1px solid #e5e7ec;
+  border-radius: 12px;
+  background: #fafbfd;
 }
 .tourney-arena {
   flex: 1;
@@ -380,30 +427,31 @@ body {
 
 .back-btn {
   appearance: none;
-  border: 1px solid #ddd;
+  border: 1px solid #e5e7ec;
   background: #fff;
   color: #555;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.85rem;
-  padding: 10px;
-  margin: 6px 14px 14px;
-  border-radius: 10px;
+  padding: 11px;
+  margin: 8px 14px 16px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color .15s;
 }
 .back-btn:hover {
-  background: #f0f0f0;
+  background: #f5f6fa;
+  border-color: #c9ccd6;
 }
 
 /* ── Mobile ── */
 @media (max-width: 480px) {
   .picker-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 4px;
+    gap: 5px;
   }
   .ball-option {
-    padding: 6px 2px;
+    padding: 8px 2px 6px;
   }
   .ball-option .emoji {
     font-size: 1.2rem;

@@ -61,6 +61,7 @@ function buildPickers() {
       const div = document.createElement("div");
       div.className = "ball-option";
       div.dataset.key = key;
+      div.style.setProperty("--c", type.color);
       div.innerHTML = '<span class="emoji">' + type.emoji + '</span><span class="name">' + type.name + '</span>';
       div.addEventListener("click", function() { selectBall(num, key); });
       picker.appendChild(div);
@@ -236,6 +237,7 @@ function buildTourneyPicker() {
     const div = document.createElement("div");
     div.className = "ball-option";
     div.dataset.key = key;
+    div.style.setProperty("--c", type.color);
     div.innerHTML = '<span class="emoji">' + type.emoji + '</span><span class="name">' + type.name + '</span>';
     div.addEventListener("click", function() { toggleTourneyBall(key, div); });
     tourneyPicker.appendChild(div);
